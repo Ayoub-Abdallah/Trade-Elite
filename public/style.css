@@ -1,0 +1,535 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f8f8f8;
+}
+
+.login-body {
+    background: #eef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login-form {
+    width: 500px;
+    height: 80vh;
+    background: #fcfcfc;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 0 4px 4px #0003;
+}
+
+.login-form h1 {
+    color: rgb(72, 72, 207);
+    font-family: sans-serif;
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.login-form label {
+    color: #222;
+    font-family: sans-serif;
+    font-size: 18px;
+    margin: 0 0 5px;
+}
+
+.login-form input {
+    color: #222;
+    background-color: #eeE;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 22px;
+    margin: 0 0 15px;
+    padding: 5px;
+    border-radius: 6px;
+}
+
+.login-form button {
+    padding: 7px 10px;
+    border: none;
+    background: rgb(72, 72, 207);
+    font-size: 20px;
+    color: white;
+    border-radius: 6px;
+    width: 100%;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+    .login-form {
+        width: 97vw;
+        padding: 10px;
+    }
+}
+
+.db-header {
+    width: 100%;
+    padding: 10px 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px #0003;
+    background: #fff;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+}
+
+.logo {
+    color: rgb(72, 72, 207);
+    font-family: sans-serif;
+    font-size: 30px;
+}
+
+.db-header nav ul {
+    display: flex;
+    list-style: none;
+}
+
+.db-header nav ul li {
+    color: #333;
+    font-size: 22px;
+    padding: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+main {
+    margin-top: 70px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.general-data {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.general-data div {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    /* padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0px 4px #0003; */
+    margin: 20px 0;
+}
+
+.general-data div h3 {
+    color: rgb(72, 72, 207);
+    font-size: 22px;
+    font-family: sans-serif;
+}
+
+.general-data div span {
+    color: #333;
+    font-size: 22px;
+    font-family: sans-serif;
+    margin: 0 5px;
+}
+
+.name-date {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#date,
+#time,
+.name-date h2 {
+    color: #333;
+    font-size: 22px;
+    font-family: sans-serif;
+}
+
+.main-data {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 10px 0 100px;
+}
+
+.main-data table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    font-family: sans-serif;
+    background-color: #fff;
+}
+
+.main-data table th {
+    background: rgb(100, 100, 242);
+    color: white;
+
+}
+
+.main-data table tbody:nth-child(odd) {
+    background-color: #0002;
+}
+
+
+.main-data table th,
+.main-data table td {
+    text-align: center;
+    padding: 5px;
+    width: 500px;
+    overflow-x: hidden;
+}
+
+.add {
+    border: none;
+    outline: none;
+    background: rgb(100, 100, 242);
+    color: #fff;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 2;
+    box-shadow: 0 2px 4px #0005;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.add:hover {
+    background: rgb(72, 72, 207);
+}
+
+.add-section {
+    width: 100%;
+    height: 100vh;
+    background: #0005;
+    backdrop-filter: blur(4px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-section form {
+    background: #fff;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px #0005;
+    height: 90vh;
+    width: 450px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.form-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.form-heading button {
+    font-size: 30px;
+    color: #333;
+    border: none;
+    background: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.form-heading h1 {
+    color: rgb(100, 100, 242);
+    font-size: 30px;
+    font-family: sans-serif;
+}
+
+.add-section form label {
+    color: #333;
+    font-size: 16px;
+    font-family: sans-serif;
+    margin: 5px 0;
+}
+
+.add-section form input,
+#select {
+    color: #333;
+    font-size: 18px;
+    font-family: sans-serif;
+    margin: 0 0 7px;
+    background-color: #eef;
+    padding: 5px 7px;
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+#submitBtn {
+    background: rgb(100, 100, 242);
+    color: white;
+    align-self: flex-end;
+    border: none;
+    padding: 5px 7px;
+    font-size: 18px;
+    border-radius: 6px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.date-time {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.date-time label {
+    width: 49%;
+}
+
+.data-table {
+    width: 100%;
+    display: none;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.subs {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    background: #FFF;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px #0005;
+    list-style: none;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 10px;
+
+}
+
+.subs li {
+    color: #333;
+    font-family: sans-serif;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+@media screen and (max-width: 1000px) {
+    .main-data table {
+        display: none;
+    }
+
+    .data-table {
+        display: flex;
+    }
+
+    .general-data,
+    .name-date {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .general-data div {
+        width: 100%;
+        margin: 5px 0;
+
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .add-section form {
+        width: 97%;
+        padding: 10px 7px;
+    }
+
+    .date-time {
+        flex-direction: column;
+    }
+
+    .date-time label {
+        width: 100%;
+    }
+
+    .form-heading h1 {
+        font-size: 26px;
+    }
+
+    .add-section form input,
+    #select {
+        font-size: 22px;
+    }
+
+    #submitBtn {
+        font-size: 24px;
+        padding: 7px 10px;
+    }
+}
+
+.err-msg {
+    text-align: center;
+    padding: 10px 15px;
+    background: #e82424;
+    color: white;
+    border-radius: 6px;
+    font-size: 22px;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    box-shadow: 0 3px 5px #0003;
+}
+
+.edit-client {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    background-color: #0005;
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-client form {
+    width: 70%;
+    height: 90vh;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px #0003;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-client form div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.edit-client form label {
+    width: 49%;
+    font-size: 18px;
+    color: #111;
+    font-family: sans-serif;
+    margin: 10px 0;
+}
+
+.edit-client form input,
+.edit-client form textarea {
+    width: 100%;
+    background-color: #0002;
+    padding: 5px 7px;
+    font-size: 18px;
+    color: #111;
+    font-family: sans-serif;
+    border: none;
+    outline: none;
+    resize: none;
+}
+
+.btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.btn-container button:nth-child(1) {
+    background-color: rgb(198, 46, 46);
+    color: #ffffff;
+    font-family: sans-serif;
+    font-size: 20px;
+    border: none;
+    padding: 5px 7px;
+    border-radius: 6px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.btn-container button:nth-child(2) {
+    background-color: rgb(94, 175, 94);
+    color: #ffffff;
+    font-family: sans-serif;
+    font-size: 20px;
+    border: none;
+    padding: 5px 7px;
+    border-radius: 6px;
+    margin: 10px;
+    cursor: pointer;
+}
+.edit-client span{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.edit-client h1 {
+    font-size: 30px;
+    color: rgb(100, 100, 242);
+    font-family: sans-serif;
+}
+
+#xmark {
+    color: #222;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+@media screen and (max-width: 460px) {
+    .edit-client form {
+        width: 95%;
+        height: 95vh;
+    }
+
+    .edit-client form div {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .edit-client form label {
+        width: 100%;
+    }
+
+    .edit-client span h1 {
+        font-size: 24px;
+    }
+
+    
+}

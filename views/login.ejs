@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Trade Elite | Log in</title>
+</head>
+
+<body class="login-body">
+    <form method="POST" action="/login" class="login-form">
+        <h1>Trade Elite</h1>
+        <label for="email">Email</label>
+        <input name="email" type="email" id="email" placeholder="Entrez votre email">
+        <label for="password">Password</label>
+        <input name="password" type="password" id="password" placeholder="Entrez votre mot de passe">
+        <button type="submit">Submit</button>
+    </form>
+    
+        <% if(!state){ %>
+            <div class="err-msg">Mot de passe ou Email est faut</div>
+        <% } %>
+
+   
+</body>
+
+</html>

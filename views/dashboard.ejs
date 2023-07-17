@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/23c9638882.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icon.jpg">
+    <title>Trade Elite | Dashboard</title>
+</head>
+
+<body onload="getClients()">
+    <header class="db-header">
+        <h1 class="logo">Trade Elite</h1>
+        <nav>
+            <ul>
+                <li><i class="fa-solid fa-bell"></i></li>
+                <li><i class="fa-solid fa-gear"></i></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="name-date">
+            <h2>Ebrahim Yasser</h2>
+            <p id="time"></p>
+            <p id="date"></p>
+        </section>
+        <section class="general-data">
+            <div id="nbrClients">
+                <h3>Abonnées:</h3>
+                <span>73</span>
+            </div>
+            <div id="activeClients">
+                <h3>Active:</h3>
+                <span>71</span>
+            </div>
+            <div>
+                <h3>Inactive:</h3>
+                <span>0</span>
+            </div>
+            <div id="total">
+                <h3>Montant total:</h3>
+                <span>2 485 $</span>
+            </div>
+        </section>
+        <hr>
+        <section class="main-data">
+            <table>
+                <tr>
+                    <th>Nom</th>
+                    <th>Lien Telegram</th>
+                    <th>id</th>
+                    <th>Abonnement</th>
+                    <th>Debut</th>
+                    <th>Fin</th>
+                    <th>Duree</th>
+                </tr>
+
+
+
+            </table>
+            <div class="data-table">
+               
+            </div>
+            <button class="add" id="add-btn"><i class="fa-solid fa-plus"></i></button>
+        </section>
+        <section class="add-section" id="add-section">
+            <form action="">
+                <div class="form-heading">
+                    <h1>Ajouter un abonné</h1>
+                    <button type="button" id="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <label for="telegram">Telegram</label>
+                <input type="text" name="" id="telegram" placeholder="Entrez le Telegram de l'abonné">
+
+                <label for="link">Lien telegram</label>
+                <input type="url" name="" id="link" placeholder="Entrez le lien de telegram de l'abonné">
+
+
+                <label for="link">ID</label>
+                <input type="text" name="" id="id" placeholder="Entrez ID de l'abonné">
+
+                <label for="cash">Droits d'abonnement</label>
+                <input type="number" name="" id="cash" placeholder="Entrez le somme à pais de l'abonné">
+
+                <div class="date-time">
+                    <label for="subs-date">Date
+                        <input type="date" name="" id="subs-date">
+                    </label>
+
+                    <label for="subs-time">Temps
+                        <input type="time" name="" id="subs-time">
+                    </label>
+
+                </div>
+                <select name="" id="select">
+                    <option hidden>Choisissez la durée de l'abonnement</option>
+                    <option value="1m">1 mois</option>
+                    <option value="3m">3 mois</option>
+                    <option value="6m">6 mois</option>
+                    <option value="1a">1 annees</option>
+                    <option value="pr">Permanent</option>
+                </select>
+                <button id="submitBtn" type="submit">Ajouter</button>
+            </form>
+        </section>
+        <section class="edit-client">
+        </section>
+    </main>
+    <footer>
+
+    </footer>
+    <script>
+        let time = document.getElementById("time")
+        let date = document.getElementById("date")
+        function update() {
+            let dt = new Date()
+            time.innerHTML = dt.toLocaleTimeString();
+            date.innerHTML = dt.toLocaleDateString();
+            setTimeout(update, 1000)
+        }
+        update()
+
+        let closeBtn = document.getElementById("close-btn")
+        let addBtn = document.getElementById("add-btn")
+        let addSection = document.getElementById("add-section")
+
+        closeBtn.addEventListener("click", () => {
+            console.log("close")
+            addSection.style.display = "none"
+        })
+        addBtn.addEventListener("click", () => {
+            console.log("open")
+            addSection.style.display = "flex"
+        })
+        let form = document.querySelector("#add-section form")
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault()
+            let res = await fetch("http://localhost:5000/addClient", {
+                headers: {
+                    "content-type": "application/json"
+                },
+                method: "post",
+                body: JSON.stringify({
+                    telegram: document.querySelector('#telegram').value,
+                    link: document.querySelector('#link').value,
+                    id: document.querySelector('#id').value,
+                    cash: document.querySelector('#cash').value,
+                    date: document.querySelector('#subs-date').value,
+                    hour: document.querySelector('#subs-time').value,
+                    delay: document.querySelector('#select').value,
+                })
+            })
+            let data = await res.json()
+            updateTable(data)
+        })
+        function updateTable(data) {
+            const table = document.querySelector(".main-data table")
+            const dataTable = document.querySelector(".data-table")
+            const nbrClients = document.querySelector("#nbrClients span")
+            const activeClients = document.querySelector("#activeClients span")
+            const total = document.querySelector("#total span")
+            console.log("jjjj" + table)
+            console.log("data")
+            console.log(data)
+            if (data.table.length == 0) {
+                table.innerHTML += "<tr><td>No clients added yet</td></tr>"
+            } else {
+                let ttl = 0
+                let cln = 0
+                table.innerHTML = "<th>Telegram</th><th>id</th><th>Abonnement</th><th>Debut</th><th>Fin</th><th>Duree</th>"
+                dataTable.innerHTML = ""
+                data.table.forEach(client => {
+                    table.innerHTML += ` <tr onclick="editClient('${client._id}')"><td><a href="${client.link}" target="_blank">${client.telegram}</a></td><td>${client.id}</td> <td>${client.cash}$</td> <td>${client.date}</td> <td>${client.time}</td><td>${client.delay}</td>  </tr>`
+                    dataTable.innerHTML += `
+                    <ul class="subs" onclick="editClient('${client._id}')">
+                    <li>Telegram:&nbsp;<span><a href="${client.link}" target="_blank">${client.telegram}</a></span></li>
+                    <li>id:&nbsp;<span>${client.id}</span></li>
+                    <li>Abonnement:&nbsp;<span>${client.cash}</span>$</li>
+                    <li>Debut:&nbsp;<span>${client.date}</span></li>
+                    <li>Fin:&nbsp;<span>${client.time}</span></li>
+                    <li>Duree:&nbsp;<span>${client.delay}</span></li>
+                </ul>
+                    `
+                    ttl += parseInt(client.cash)
+                    cln += 1
+                })
+                total.innerHTML = ttl + "$"
+                nbrClients.innerHTML = cln
+                activeClients.innerHTML = cln
+            };
+        }
+        async function getClients() {
+            const res = await fetch("http://localhost:5000/getClients")
+            const data = await res.json()
+            updateTable(data)
+        }
+        async function editClient(_id) {
+            const res = await fetch("http://localhost:5000/getOneClient", {
+                headers: {
+                    "content-type": "application/json"
+                },
+                method: "post",
+                body: JSON.stringify({ _id })
+            })
+            const data = await res.json()
+            await loadClient(data)
+            console.log(data)
+        }
+        function loadClient(client) {
+            console.log(client)
+            const editWindow = document.querySelector('.edit-client')
+            editWindow.style.display = "flex"
+            editWindow.innerHTML = ` <form>
+               <span>
+                <h1> Editer info de client</h1>
+                <i class="fa-solid fa-xmark" onclick="closeWindow()" id="xmark"></i>
+                </span>
+                <div>
+                    <label for="te">Telegram
+                        <input type="text" name="" id="te" value="${client.data.telegram}">
+                    </label>
+                    <label for="edit_id">Id
+                        <input type="text" name="" id="edit_id" value="${client.data.id}">
+                    </label>
+                </div>
+                <label for="ln">lien telegram</label>
+                <input type="text" name="" id="ln" value="${client.data.link}">
+                <div>
+                    <label for="csh">Abonnement
+                        <input type="text" name="" id="csh" value="${client.data.cash}">
+                    </label>
+
+                    <label for="dr">Duree
+                        <input type="text" name="" id="dr" value="${client.data.delay}">
+                    </label>
+                </div>
+
+                <div>
+                    <label for="dt">Date
+                        <input type="text" name="" id="dt" value="${client.data.date}">
+                    </label>
+                    <label for="tm">Temps
+                        <input type="text" name="" id="tm" value="${client.data.hour}">
+                    </label>
+                </div>
+                <label for="specialNotes">Notes</label>
+                <textarea name="" id="specialNotes" cols="30" rows="7" resize="false"></textarea>
+                <span class="btn-container">
+                    
+                    <button type="button" onclick="supprimer('${client.data._id}')">Supprimer</button>
+                    <button type="button" onclick="save('${client.data._id}')">Enregistrer</button>
+                </span>
+            </form>`
+        }
+        function closeWindow() {
+            const editWindow = document.querySelector('.edit-client')
+            editWindow.style.display = "none"
+        }
+        async function save(_id) {
+            console.log('save')
+            let res = await fetch("http://localhost:5000/save", {
+                headers: {
+                    "content-type": "application/json"
+                },
+                method: "post",
+                body: JSON.stringify({
+                    _id,
+                    telegram: document.querySelector('#te').value,
+                    link: document.querySelector('#ln').value,
+                    id: document.querySelector('#edit_id').value,
+                    cash: document.querySelector('#csh').value,
+                    date: document.querySelector('#dt').value,
+                    hour: document.querySelector('#tm').value,
+                    delay: document.querySelector('#dr').value,
+                })
+            })
+            let data = await res.json()
+            console.log(data)
+            closeWindow()
+            await updateTable(data)
+        }
+        async function supprimer(_id) {
+            console.log('save')
+            let res = await fetch("http://localhost:5000/delete", {
+                headers: {
+                    "content-type": "application/json"
+                },
+                method: "post",
+                body: JSON.stringify({ _id })
+            })
+            let data = await res.json()
+            closeWindow()
+            updateTable(data)
+        }
+    </script>
+</body>
+
+</html>
